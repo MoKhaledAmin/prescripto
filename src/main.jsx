@@ -4,6 +4,9 @@ import { createRoot } from 'react-dom/client';
 // React Router
 import { BrowserRouter } from 'react-router-dom';
 
+// Context
+import AppContextprovider from './context/AppContext';
+
 // Application
 import App from './App.jsx';
 
@@ -13,7 +16,9 @@ import './index.css';
 createRoot(document.getElementById('root')).render(
     <Fragment>
         <BrowserRouter>
-            <App />
+            <AppContextprovider>
+                <App />
+            </AppContextprovider>
         </BrowserRouter >
     </Fragment>,
 )

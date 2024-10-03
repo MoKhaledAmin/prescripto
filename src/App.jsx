@@ -11,6 +11,7 @@ import Doctors from './pages/Doctors';
 import Contact from './pages/Contact';
 import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Appointment from './pages/Appointment';
 import MyAppointments from './pages/MyAppointments';
 
@@ -30,6 +31,7 @@ const App = () => {
                     <Route path='/my-appointments' element={<MyAppointments />} />
                     <Route path='/appointment/:docId' element={<Appointment />} />
                 </Routes>
+                <Footer />
             </div>
         </React.Fragment>
     )
