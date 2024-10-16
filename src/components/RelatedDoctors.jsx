@@ -1,23 +1,33 @@
-import React, { useContext } from 'react';
-
-// React Router
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
 
 // Context
 import { AppContext } from './../context/AppContext';
 
-const TopDoctors = () => {
+// React Router
+import { useNavigate } from 'react-router-dom';
+
+// eslint-disable-next-line react/prop-types
+const RelatedDoctors = ({ docId, speciality }) => {
     const Navigate = useNavigate();
     const { doctors } = useContext(AppContext);
+    const [ relatedDoc, setRelatedDoc ] = useState([]);
+
+    // Load Related Doctors
+    useEffect(() => {
+        if (doctors.length > 0 && speciality) {
+            const doctorsData = doctors.filter((doc) => doc.speciality === speciality && doc._id !== docId);
+            setRelatedDoc(doctorsData);
+        }
+    }, [doctors, docId, speciality]);
 
     return (
         <React.Fragment>
             <div className='flex flex-col items-center gap-4 my-16 text-gray-900 md:mx-10'>
-                <h1 className='text-3xl font-medium'>Top Doctors To Book</h1>
+                <h1 className='text-3xl font-medium'>Related Doctors</h1>
                 <p className='sm:w-1/3 text-center text-sm'>Simply browse through our extensive list of trusted doctors.</p>
                 <div className='w-full grid grid-cols-auto gap-4 pt-5 gap-y-6 px-3 sm:px-0'>
                     {
-                        doctors.slice(0, 12).map((item, index) => (
+                        relatedDoc.slice(0, 5).map((item, index) => (
                             <div onClick={() => {Navigate(`/appointment/${item._id}`); scrollTo(0, 0)}} key={index} className='border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500'>
                                 <img className='bg-blue-50' src={item.image} alt='' />
                                 <div className='p-4'>
@@ -37,4 +47,4 @@ const TopDoctors = () => {
     )
 }
 
-export default TopDoctors;
+export default RelatedDoctors;
